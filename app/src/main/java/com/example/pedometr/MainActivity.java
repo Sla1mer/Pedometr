@@ -43,19 +43,16 @@ public class MainActivity extends AppCompatActivity{
 
         thread=new Thread (new AnotherRunnable());
         thread.start();
-//
-//            fragmentManager=getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            FragmentHome fragment = new FragmentHome();
-//            fragmentTransaction.add(R.id.container, fragment);
-//            fragmentTransaction.commit();
     }
+    
     class AnotherRunnable implements Runnable{
-
         @Override
         public void run() {
             while(!thread.isInterrupted())
-                try{ Ti();} catch (Exception e) { e.printStackTrace(); }
+                try{
+                    setCountSteps();
+                } catch (Exception e) {
+                    e.printStackTrace(); }
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -64,13 +61,13 @@ public class MainActivity extends AppCompatActivity{
 
         }
     }
-    public void Ti(){
+
+    public void setCountSteps(){
         steps = Integer.toString(countService.getSteps());
         if (!(countSteps.getText().equals(steps))){
             countSteps.setText(steps);}
 
     }
-
 
     @Override
     protected void onStart() {
@@ -80,6 +77,7 @@ public class MainActivity extends AppCompatActivity{
         this.bindService(intent,countserviceConnection,Context.BIND_AUTO_CREATE);
 
     }
+
     @Override
     protected void onStop() {
         super.onStop();

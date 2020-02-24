@@ -20,9 +20,9 @@ public class CountService extends Service implements SensorEventListener{
     private float[] geomagnetism;
     private int steps = 0;
 
-
     public CountService() {
     }
+
     public final IBinder binder = new LocalCountBinder();
     public class LocalCountBinder extends Binder{
         public CountService getService(){
@@ -42,13 +42,16 @@ public class CountService extends Service implements SensorEventListener{
         SensorManager.getRotationMatrix(rotationMatrix, null, accelerometer,geomagnetism); //получаем матрицу поворота
         SensorManager.getOrientation(rotationMatrix, orientation);
 
-        if(accelerometer[0]>=10&&accelerometer[0]<=20) {steps++;}
+        if(accelerometer[0]>=10&&accelerometer[0]<=20) {
+            steps++;
+        }
 
     }
-    public Integer getSteps(){
 
+    public Integer getSteps(){
         return steps;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -60,6 +63,7 @@ public class CountService extends Service implements SensorEventListener{
         geomagnetism = new float[3];
         orientation = new float[3];
     }
+
     private void loadSensorData(SensorEvent event) {
         final int type = event.sensor.getType(); //определяем тип датчика
         if (type == Sensor.TYPE_ACCELEROMETER) { //если акселерометр
@@ -70,14 +74,10 @@ public class CountService extends Service implements SensorEventListener{
         }
     }
 
-
-
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
 
     @Override
     public IBinder onBind(Intent intent) {
